@@ -1,0 +1,45 @@
+---
+- hosts: hostsharing
+  tasks:
+  - name: ensure user exists
+    hsuser.js: name="{{pac}}-{{user}}" password="{{password}}" exists="true"
+  - name: setup domain
+    hsdomain.js: name="{{domain}}" owner="{{pac}}-{{user}}" exists="true"
+  - name: download minimal buildout from github
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    git: repo=git://github.com/Dominic-Schlegel/HostSharing-MinimalPloneBuildout.git accept_hostkey=yes
+         dest=plone/
+  - name: add user & password to buildout.cfg
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    lineinfile: dest=plone/buildout.cfg line="user = {{pac}}-{{user}}:{{password}}"
+  - name: add domain to buildout.cfg
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    lineinfile: dest=plone/buildout.cfg line="ip-address = {{user}}.{{pac}}.hostsharing.net"
+  - name: add http port to buildout.cfg
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    lineinfile: dest=plone/buildout.cfg line="http-address = 12300"
+  - name: add ftp port to buildout.cfg
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    lineinfile: dest=plone/buildout.cfg line="ftp-address = 12301"
+  - name: create env
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    command: virtualenv virtualenv chdir="/home/pacs/{{pac}}/users/{{user}}/plone"
+  - name: create env
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    command: virtualenv/bin/python bootstrap.py -c buildout.cfg chdir="/home/pacs/{{pac}}/users/{{user}}/plone"
+  - name: create env
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    command: bin/buildout -c buildout.cfg chdir="/home/pacs/{{pac}}/users/{{user}}/plone"
+  - name: start instance
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    command: bin/instance start chdir="/home/pacs/{{pac}}/users/{{user}}/plone"
+
