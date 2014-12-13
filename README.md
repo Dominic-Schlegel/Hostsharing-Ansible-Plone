@@ -1,7 +1,7 @@
 HostSharing-Ansible-Plone
 =========================
 
-To use these modules you have to create a file named ".hsadmin.properties" in the home directory of the package admins. In it you have to define the the packagename and password of the package admin.
+To use these modules you have to create a file named ".hsadmin.properties" in the home directory of the package admins. In it you have to define the packagename and password of the package admin.
 
     xyz00@h99:~$ cat .hsadmin.properties 
     xyz00.passWord=insertpkgadminpasswordhere
