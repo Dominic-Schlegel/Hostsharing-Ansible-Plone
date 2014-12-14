@@ -17,7 +17,7 @@
   - name: add domain to buildout.cfg
     sudo: yes
     sudo_user: "{{pac}}-{{user}}"
-    lineinfile: dest=plone/buildout.cfg line="ip-address = {{user}}.{{pac}}.hostsharing.net"
+    lineinfile: dest=plone/buildout.cfg line="ip-address = {{pac}}.hostsharing.net"
   - name: add http port to buildout.cfg
     sudo: yes
     sudo_user: "{{pac}}-{{user}}"
