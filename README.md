@@ -36,7 +36,7 @@ Or for a custom buildout (thanks to Veit Schiele):
 
 Now we can reach our site via:
 
-    https://www.plone.xyz00.hostsharing.net
+    http://www.plone.xyz00.hostsharing.net
 
 Change the default passwords!
 
