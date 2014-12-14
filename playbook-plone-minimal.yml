@@ -42,4 +42,11 @@
     sudo: yes
     sudo_user: "{{pac}}-{{user}}"
     command: bin/instance start chdir="/home/pacs/{{pac}}/users/{{user}}/plone"
-
+  - name: create .htaccess file in doms/{{user}}.{{domain}}/subs/www/
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    command: touch doms/{{domain}}/subs/www/.htaccess creates="doms/{{domain}}/subs/www/.htaccess" chdir="/home/pacs/{{pac}}/users/{{user}}"
+  - name: add "Rewrite Rule" to .htaccess file
+    sudo: yes
+    sudo_user: "{{pac}}-{{user}}"
+    lineinfile: dest=doms/{{domain}}/subs/www/.htaccess line='RewriteEngine on\nRewriteCond %{SERVER_PORT} ^80$\nRewriteRule ^(.*) http://{{pac}}.hostsharing.net:12300/VirtualHostBase/http/www.{{domain}}:80/VirtualHostRoot/$1 [proxy,last]\nRewriteCond %{SERVER_PORT} ^443$\nRewriteRule ^(.*) http://{{pac}}.hostsharing.net:12300/VirtualHostBase/https/www.{{domain}}:443/VirtualHostRoot/$1 [proxy,last]'
