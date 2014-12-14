@@ -1,5 +1,5 @@
 ---
-- hosts: hostsharing
+- hosts: plone
   tasks:
   - name: ensure user exists
     hsuser.js: name="{{pac}}-{{user}}" password="{{password}}" exists="true"
@@ -8,7 +8,7 @@
   - name: download minimal buildout from github
     sudo: yes
     sudo_user: "{{pac}}-{{user}}"
-    git: repo=git://github.com/Dominic-Schlegel/HostSharing-MinimalPloneBuildout.git accept_hostkey=yes
+    git: repo=git://github.com/Dominic-Schlegel/Hostsharing-Minimal-Plone-Buildout.git accept_hostkey=yes
          dest=plone/
   - name: add user & password to buildout.cfg
     sudo: yes
